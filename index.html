@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AX-2 | Mission Experience</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap');
+
+:root{
+ --bg:#070d18;--panel:#101b2c;--panel2:#142238;
+ --line:#263b54;--cyan:#55d9ed;--gold:#d6b878;
+ --white:#edf4fb;--muted:#91a4ba;--green:#63d6a1;--red:#ff7777;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;background:radial-gradient(ellipse at top,#14243a 0%,#070d18 60%);
+ color:var(--white);font-family:'IBM Plex Sans Arabic',sans-serif;
+ min-height:100vh;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+.wrap{width:min(1050px,94%);margin:auto;padding:22px 0 55px}
+header{display:flex;justify-content:space-between;align-items:center;
+ border-bottom:1px solid var(--line);padding:12px 0 20px;margin-bottom:25px}
+.brand{font-size:19px;font-weight:700;letter-spacing:1px}
+.brand span{color:var(--cyan)}
+.small{color:var(--muted);font-size:12px}
+.pill{border:1px solid var(--line);padding:8px 12px;border-radius:30px;color:var(--muted);font-size:12px}
+h1{font-size:clamp(25px,5vw,42px);margin:8px 0}
+h2{font-size:23px;margin:0 0 12px}
+p{line-height:1.9;color:var(--muted)}
+.panel{background:linear-gradient(145deg,#142238,#0d1727);
+ border:1px solid var(--line);border-radius:17px;padding:22px;margin:16px 0}
+.eyebrow{font-size:11px;color:var(--cyan);letter-spacing:2px}
+input{width:100%;padding:14px;border:1px solid var(--line);border-radius:10px;
+ background:#081321;color:white;outline:none;margin:12px 0}
+input:focus{border-color:var(--cyan)}
+.btn{border:1px solid var(--cyan);background:var(--cyan);color:#07111c;
+ padding:12px 20px;border-radius:9px;font-weight:700}
+.btn.secondary{background:transparent;color:var(--white);border-color:var(--line)}
+.btn.gold{background:var(--gold);border-color:var(--gold)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.topstats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+.stat{background:#0b1625;border:1px solid var(--line);padding:13px;border-radius:12px}
+.stat strong{display:block;font-size:23px;color:var(--cyan)}
+.stat span{font-size:11px;color:var(--muted)}
+.progress{height:5px;background:#1b2b40;border-radius:9px;overflow:hidden;margin:15px 0}
+.progress div{height:100%;background:var(--cyan);width:0;transition:.3s}
+.stagegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.stage{border:1px solid var(--line);border-radius:10px;padding:12px 7px;
+ text-align:center;font-size:12px;color:var(--muted)}
+.stage.active{border-color:var(--cyan);color:var(--cyan);background:#10283a}
+.stage.done{border-color:var(--green);color:var(--green)}
+.timer{font-size:38px;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums}
+.timer.danger{color:var(--red);animation:pulse .7s infinite alternate}
+@keyframes pulse{to{opacity:.4}}
+.question{font-size:19px;color:var(--white);margin:15px 0}
+.choice{display:block;width:100%;text-align:right;margin:9px 0;padding:14px;
+ background:#0a1626;color:var(--white);border:1px solid var(--line);
+ border-radius:10px;transition:.2s}
+.choice:hover{border-color:var(--cyan);background:#12283b}
+.choice:disabled{opacity:.65;cursor:default}
+.choice.correct{border-color:var(--green);background:#103126}
+.choice.wrong{border-color:var(--red);background:#351c25}
+.feedback{min-height:28px;color:var(--gold);font-size:13px;margin-top:10px}
+.event{border:1px solid #79683f;background:linear-gradient(140deg,#262318,#111b28);
+ border-radius:15px;padding:20px;margin-top:18px}
+.event .date{color:var(--gold);font-size:13px}
+.event h3{margin:8px 0;color:#f1dfb5}
+.event p{color:#c2cbd5}
+.event .tag{color:var(--gold);font-size:11px}
+.hidden{display:none!important}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{padding:12px 8px;border-bottom:1px solid var(--line);text-align:right}
+th{font-size:12px;color:var(--muted)}
+td{font-size:14px}
+.certificate{background:#f2eee3;color:#182538;border:8px double #b69a5e;
+ padding:35px 20px;text-align:center;border-radius:5px;margin-top:15px}
+.certificate h2{font-size:30px;color:#9a793a}
+.certificate .name{font-size:29px;font-weight:bold;margin:20px 0;color:#172d45}
+.certificate p{color:#35465b}
+.seal{display:inline-block;border:1px solid #b69a5e;padding:10px 18px;color:#94733a;margin:12px}
+footer{text-align:center;color:#65788d;font-size:11px;margin-top:35px}
+@media(max-width:600px){
+ .stagegrid{grid-template-columns:repeat(2,1fr)}
+ .panel{padding:16px}
+ .topstats{gap:6px}
+ .stat strong{font-size:19px}
+}
+@media print{
+ body{background:white;color:#172538}
+ header,.no-print,footer{display:none!important}
+ .wrap{width:100%;padding:0}
+ .certificate{display:block!important;page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+ <div>
+  <div class="brand">AX-2 <span>MISSION EXPERIENCE</span></div>
+  <div class="small">تجربة تفاعلية تعليمية عن مهمة أكسيوم 2</div>
+ </div>
+ <button class="btn secondary no-print" onclick="toggleSound()" id="soundBtn">🔊 الصوت يعمل</button>
+</header>
+
+<section id="welcome" class="panel">
+ <div class="eyebrow">MISSION CONTROL / 01</div>
+ <h1>هل أنت مستعد للمهمة؟</h1>
+ <p>اختبر قراراتك في أربع محطات تفاعلية مستوحاة من رحلة ريانة برناوي وعلي القرني إلى محطة الفضاء الدولية.</p>
+ <p class="small">هذه محاكاة تعليمية وليست نظام تحكم حقيقيًا أو إعادة تمثيل حرفية لعمليات AX-2.</p>
+ <label for="playerName">اسم المشارك</label>
+ <input id="playerName" maxlength="28" placeholder="اكتب اسمك هنا">
+ <button class="btn" onclick="startGame()">بدء المهمة ←</button>
+</section>
+
+<section id="game" class="hidden">
+ <div class="row" style="justify-content:space-between">
+  <div><div class="eyebrow">MISSION IN PROGRESS</div><h2 id="welcomeName"></h2></div>
+  <span class="pill" id="stageCount">المرحلة 1 من 4</span>
+ </div>
+ <div class="topstats">
+  <div class="stat"><strong id="score">0</strong><span>النقاط</span></div>
+  <div class="stat"><strong class="timer" id="timer">01:00</strong><span>الوقت المتبقي</span></div>
+  <div class="stat"><strong id="completed">0/4</strong><span>المراحل المكتملة</span></div>
+ </div>
+ <div class="progress"><div id="progressBar"></div></div>
+ <div class="stagegrid" id="stageGrid"></div>
+
+ <div class="panel" id="challengePanel">
+  <div class="eyebrow" id="stageEyebrow">STAGE 01</div>
+  <h2 id="stageTitle"></h2>
+  <p id="stageIntro"></p>
+  <div class="question" id="question"></div>
+  <div id="choices"></div>
+  <div class="feedback" id="feedback"></div>
+  <div class="row">
+   <button class="btn secondary" onclick="repeatInstruction()">↻ إعادة قراءة التعليمات</button>
+  </div>
+ </div>
+ <div id="eventCard" class="event hidden">
+  <div class="tag">REAL MISSION RECORD / سجل تاريخي موثق</div>
+  <div class="date" id="eventDate"></div>
+  <h3 id="eventTitle"></h3>
+  <p id="eventText"></p>
+  <div class="small" id="eventSource"></div>
+  <button class="btn gold" style="margin-top:14px" onclick="nextStage()">متابعة المهمة ←</button>
+ </div>
+</section>
+
+<section id="results" class="hidden">
+ <div class="panel">
+  <div class="eyebrow">MISSION COMPLETED</div>
+  <h1>اكتملت المهمة</h1>
+  <p id="resultText"></p>
+  <div class="topstats">
+   <div class="stat"><strong id="finalScore">0</strong><span>مجموع النقاط</span></div>
+   <div class="stat"><strong>4/4</strong><span>المراحل</span></div>
+   <div class="stat"><strong id="finalRank">—</strong><span>ترتيبك</span></div>
+  </div>
+ </div>
+ <div class="panel">
+  <h2>لوحة المتصدرين</h2>
+  <p>أفضل النتائج المسجلة على هذا الجهاز والمتصفح.</p>
+  <div style="overflow-x:auto">
+   <table><thead><tr><th>#</th><th>المشارك</th><th>النقاط</th><th>التاريخ</th></tr></thead>
+   <tbody id="leaderRows"></tbody></table>
+  </div>
+ </div>
+ <div class="panel">
+  <h2>شهادة إتمام التجربة</h2>
+  <div class="certificate" id="certificate">
+   <div class="eyebrow" style="color:#94733a">AXIOM MISSION 2 / EDUCATIONAL EXPERIENCE</div>
+   <h2>شهادة إتمام تجربة تفاعلية</h2>
+   <p>تُمنح هذه الشهادة إلى</p>
+   <div class="name" id="certName"></div>
+   <p>لإتمامه بنجاح مراحل تجربة AX-2 التفاعلية التعليمية</p>
+   <div class="seal">MISSION EXPERIENCE</div>
+   <p>النتيجة: <strong id="certScore"></strong> نقطة</p>
+   <p id="certDate"></p>
+   <p style="font-size:11px">شهادة مشاركة تعليمية غير رسمية، وليست صادرة عن NASA أو Axiom Space أو SpaceX.</p>
+  </div>
+  <div class="row no-print" style="margin-top:15px">
+   <button class="btn gold" onclick="window.print()">طباعة / حفظ PDF</button>
+   <button class="btn secondary" onclick="restart()">مشارك جديد</button>
+  </div>
+ </div>
+</section>
+<footer>AX-2 MISSION EXPERIENCE · تجربة تعليمية مستقلة · المعلومات التاريخية من NASA وAxiom Space وSpaceX</footer>
+</div>
+
+<script>
+const stages=[
+{
+ title:"تحدي الإطلاق",
+ intro:"أنت ضمن فريق متابعة الإطلاق. اختر التسلسل المنطقي الصحيح لوصول المركبة إلى المدار.",
+ question:"ما التسلسل الصحيح لرحلة المركبة من منصة الإطلاق إلى محطة الفضاء؟",
+ choices:["الإطلاق ← الوصول إلى المدار ← الالتحام بالمحطة",
+          "الالتحام بالمحطة ← الإطلاق ← الوصول إلى المدار",
+          "الوصول إلى المدار ← الهبوط ← الإطلاق"],
+ answer:0,
+ explanation:"صحيح. تبدأ الرحلة بالإطلاق، ثم الوصول إلى المدار، ثم الاقتراب والالتحام بالمحطة.",
+ eventDate:"21 مايو 2023",
+ eventTitle:"انطلاق مهمة أكسيوم 2 إلى الفضاء",
+ eventText:"انطلق صاروخ Falcon 9 حاملًا مركبة Dragon وعلى متنها طاقم Ax-2 من مركز كينيدي للفضاء في فلوريدا. ضم الطاقم ريانة برناوي وعلي القرني إلى جانب بيغي ويتسون وجون شوفنر.",
+ source:"المصدر: NASA وSpaceX — Ax-2 launch.",
+ sourceUrl:"https://www.nasa.gov/blogs/spacestation/2023/05/21/four-private-astronauts-launch-toward-space-station/"
+},
+{
+ title:"تحدي الالتحام",
+ intro:"وصلت المركبة إلى جوار محطة الفضاء الدولية. اختر الإجراء الصحيح قبل اعتبارها ملتحمة.",
+ question:"ما الذي يميز الالتحام الآمن بالمحطة؟",
+ choices:["الاقتراب المنضبط والتحقق من المحاذاة والاتصال",
+          "زيادة السرعة إلى أقصى حد",
+          "إيقاف جميع أنظمة الملاحة دون تحقق"],
+ answer:0,
+ explanation:"صحيح. الاقتراب والمحاذاة والتحقق عناصر أساسية في عمليات الالتحام. هذا سؤال مبسط وليس إجراء تشغيل فعلي.",
+ eventDate:"22 مايو 2023",
+ eventTitle:"التحام Dragon بمحطة الفضاء الدولية",
+ eventText:"التحمت مركبة Dragon Freedom ذاتيًا بمحطة الفضاء الدولية عند وحدة Harmony. وبعد فتح الفتحة، انضم طاقم Ax-2 إلى طاقم المحطة الموجود على متنها.",
+ source:"المصدر: NASA — تغطية وصول Ax-2.",
+ sourceUrl:"https://www.nasa.gov/news-release/axiom-space-private-astronauts-headed-to-international-space-station/"
+},
+{
+ title:"تحدي المختبر العلمي",
+ intro:"أثناء الإقامة في المحطة، شارك الطاقم في أنشطة بحثية. اختر العبارة العلمية الأدق.",
+ question:"لماذا تُجرى بعض التجارب في بيئة الجاذبية الصغرى؟",
+ choices:["لدراسة تأثير اختلاف الجاذبية على الأنظمة الحيوية والمواد",
+          "لأن انعدام الجاذبية يلغي جميع المخاطر",
+          "لأن نتائج التجارب تصبح صحيحة تلقائيًا"],
+ answer:0,
+ explanation:"صحيح. بيئة الجاذبية الصغرى تتيح دراسة ظواهر قد تختلف عن تلك الموجودة على الأرض.",
+ eventDate:"21–30 مايو 2023",
+ eventTitle:"أبحاث علمية وأنشطة على متن المحطة",
+ eventText:"شارك طاقم Ax-2 في أكثر من 20 تجربة وأنشطة بحثية وتوعوية. تناولت الأبحاث مجالات متعددة، من بينها فسيولوجيا الإنسان والعلوم الفيزيائية والتقنيات، بهدف توسيع المعرفة ودعم أبحاث الرحلات الفضائية.",
+ source:"المصدر: NASA وAxiom Space — Ax-2 mission overview.",
+ sourceUrl:"https://axiomspace.com/missions/ax2"
+},
+{
+ title:"تحدي العودة إلى الأرض",
+ intro:"انتهت فترة العمل في المحطة. اختر التسلسل الصحيح للعودة.",
+ question:"ما التسلسل العام الصحيح للعودة من محطة الفضاء إلى الأرض؟",
+ choices:["إغلاق الفتحة والاستعداد ← الانفصال ← العودة والدخول الجوي ← الهبوط المائي",
+          "الهبوط المائي ← الالتحام ← الانفصال",
+          "الدخول الجوي ← الالتحام بالمحطة ← الإطلاق"],
+ answer:0,
+ explanation:"صحيح. تغلق الفتحة ويستعد الطاقم، ثم تنفصل المركبة وتعود إلى الأرض وتهبط في البحر.",
+ eventDate:"30 مايو 2023",
+ eventTitle:"عودة طاقم Ax-2 إلى الأرض",
+ eventText:"انفصلت مركبة Dragon Freedom عن محطة الفضاء الدولية، وعادت حاملة طاقم Ax-2، ثم هبطت بأمان في مياه قبالة ساحل فلوريدا عند الساعة 11:04 مساءً بالتوقيت الشرقي.",
+ source:"المصدر: Axiom Space — Ax-2 splashdown.",
+ sourceUrl:"https://www.axiomspace.com/mission-blog/ax2-splashdown"
+}
+];
+
+let player="",score=0,index=0,timeLeft=60,timerId=null;
+let soundOn=true,answered=false,finishedStages=0;
+let audioCtx=null;
+
+function beep(freq=650,duration=.13,type="sine"){
+ if(!soundOn)return;
+ try{
+  audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==="suspended")audioCtx.resume();
+  const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();
+  osc.type=type;osc.frequency.value=freq;
+  gain.gain.setValueAtTime(.08,audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+duration);
+  osc.connect(gain);gain.connect(audioCtx.destination);
+  osc.start();osc.stop(audioCtx.currentTime+duration);
+ }catch(e){}
+}
+function toggleSound(){
+ soundOn=!soundOn;
+ document.getElementById("soundBtn").textContent=soundOn?"🔊 الصوت يعمل":"🔇 الصوت مكتوم";
+ if(soundOn)beep();
+}
+function startGame(){
+ const n=document.getElementById("playerName").value.trim();
+ if(!n){alert("اكتب اسم المشارك أولًا");return}
+ player=n.slice(0,28);
+ document.getElementById("welcome").classList.add("hidden");
+ document.getElementById("game").classList.remove("hidden");
+ document.getElementById("welcomeName").textContent="مرحبًا، "+player;
+ renderStages();loadStage();
+ beep(750,.3);
+}
+function renderStages(){
+ document.getElementById("stageGrid").innerHTML=stages.map((s,i)=>
+ `<div class="stage ${i===index?"active":i<index?"done":""}">${String(i+1).padStart(2,"0")}<br>${s.title}</div>`
+ ).join("");
+ document.getElementById("stageCount").textContent=`المرحلة ${index+1} من 4`;
+ document.getElementById("completed").textContent=finishedStages+"/4";
+ document.getElementById("score").textContent=score;
+ document.getElementById("progressBar").style.width=(finishedStages/4*100)+"%";
+}
+function loadStage(){
+ clearInterval(timerId);answered=false;timeLeft=60;
+ const s=stages[index];
+ document.getElementById("challengePanel").classList.remove("hidden");
+ document.getElementById("eventCard").classList.add("hidden");
+ document.getElementById("stageEyebrow").textContent="STAGE 0"+(index+1)+" / MISSION CONTROL";
+ document.getElementById("stageTitle").textContent=s.title;
+ document.getElementById("stageIntro").textContent=s.intro;
+ document.getElementById("question").textContent=s.question;
+ document.getElementById("feedback").textContent="";
+ document.getElementById("choices").innerHTML=s.choices.map((c,i)=>
+ `<button class="choice" onclick="choose(${i})">${c}</button>`
+ ).join("");
+ renderStages();updateTimer();
+ timerId=setInterval(()=>{
+  if(answered)return;
+  timeLeft--;updateTimer();
+  if(timeLeft<=10&&timeLeft>0)beep(850,.08,"square");
+  if(timeLeft<=0)timeoutStage();
+ },1000);
+}
+function updateTimer(){
+ const el=document.getElementById("timer");
+ el.textContent="00:"+String(timeLeft).padStart(2,"0");
+ el.classList.toggle("danger",timeLeft<=10);
+}
+function choose(choice){
+ if(answered)return;
+ answered=true;clearInterval(timerId);
+ const s=stages[index],buttons=[...document.querySelectorAll(".choice")];
+ buttons.forEach((b,i)=>{
+  b.disabled=true;
+  if(i===s.answer)b.classList.add("correct");
+  else if(i===choice)b.classList.add("wrong");
+ });
+ if(choice===s.answer){
+  const points=100+timeLeft;
+  score+=points;
+  document.getElementById("feedback").textContent=`إجابة صحيحة! +${points} نقطة`;
+  beep(900,.2);setTimeout(()=>beep(1200,.25),180);
+ }else{
+  document.getElementById("feedback").textContent="لم تكن الإجابة صحيحة. راجع التفسير في سجل المهمة.";
+  beep(180,.4,"sawtooth");
+ }
+ setTimeout(()=>showEvent(),800);
+}
+function timeoutStage(){
+ if(answered)return;
+ answered=true;clearInterval(timerId);
+ document.querySelectorAll(".choice").forEach(b=>b.disabled=true);
+ document.getElementById("feedback").textContent="انتهى الوقت. انتقل إلى سجل الحدث الحقيقي.";
+ beep(150,.5,"sawtooth");
+ setTimeout(showEvent,700);
+}
+function showEvent(){
+ const s=stages[index];
+ document.getElementById("challengePanel").classList.add("hidden");
+ document.getElementById("eventCard").classList.remove("hidden");
+ document.getElementById("eventDate").textContent=s.eventDate;
+ document.getElementById("eventTitle").textContent=s.eventTitle;
+ document.getElementById("eventText").textContent=s.eventText;
+ document.getElementById("eventSource").innerHTML=
+ `المصدر: <a href="${s.sourceUrl}" target="_blank" rel="noopener" style="color:#e2c986">${s.source}</a>`;
+ if(!s.done){s.done=true;finishedStages++;}
+ renderStages();
+}
+function nextStage(){
+ index++;
+ if(index>=stages.length){finishGame();return}
+ loadStage();
+}
+function repeatInstruction(){
+ const s=stages[index];
+ if("speechSynthesis" in window){
+  speechSynthesis.cancel();
+  const msg=new SpeechSynthesisUtterance(s.intro+" "+s.question);
+  msg.lang="ar-SA";msg.rate=.9;speechSynthesis.speak(msg);
+ }else{
+  document.getElementById("feedback").textContent="إعادة التعليمات الصوتية غير مدعومة في هذا المتصفح.";
+ }
+}
+function getBoard(){
+ try{return JSON.parse(localStorage.getItem("ax2_leaderboard")||"[]")}
+ catch(e){return []}
+}
+function finishGame(){
+ clearInterval(timerId);
+ document.getElementById("game").classList.add("hidden");
+ document.getElementById("results").classList.remove("hidden");
+ const board=getBoard();
+ const entry={name:player,score,date:new Date().toLocaleDateString("ar-SA")};
+ board.push(entry);
+ board.sort((a,b)=>b.score-a.score);
+ const top=board.slice(0,10);
+ localStorage.setItem("ax2_leaderboard",JSON.stringify(top));
+ const rank=top.findIndex(x=>x===entry);
+ document.getElementById("finalScore").textContent=score;
+ document.getElementById("finalRank").textContent=rank>=0?"#"+(rank+1):"—";
+ document.getElementById("resultText").textContent=
+ `أحسنت يا ${player}. أكملت جميع مراحل التجربة وحصلت على ${score} نقطة.`;
+ document.getElementById("certName").textContent=player;
+ document.getElementById("certScore").textContent=score;
+ document.getElementById("certDate").textContent=new Date().toLocaleDateString("ar-SA");
+ document.getElementById("leaderRows").innerHTML=top.map((x,i)=>
+ `<tr><td>${i+1}</td><td>${escapeHTML(x.name)}</td><td>${x.score}</td><td>${x.date}</td></tr>`
+ ).join("");
+ beep(1000,.3);setTimeout(()=>beep(1300,.4),250);
+}
+function escapeHTML(str){
+ return String(str).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function restart(){
+ clearInterval(timerId);player="";score=0;index=0;timeLeft=60;finishedStages=0;
+ stages.forEach(s=>delete s.done);
+ document.getElementById("results").classList.add("hidden");
+ document.getElementById("welcome").classList.remove("hidden");
+ document.getElementById("playerName").value="";
+}
+</script>
+</body>
+</html>
